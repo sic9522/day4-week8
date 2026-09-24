@@ -44,7 +44,14 @@ export default function LibroModale({ id, copertina, exlibris, children, onChiud
 
           <div className="cardine">
             <div className={`faccia copertina${copertina.foto ? ' con-foto' : ''}`} style={{ background: copertina.tinta }}>
-              {copertina.foto && <img className="copertina-foto" src={copertina.foto} alt="" />}
+              {copertina.foto && (
+                <img
+                  className="copertina-foto"
+                  src={copertina.foto}
+                  alt=""
+                  onError={(e) => { e.currentTarget.hidden = true }}
+                />
+              )}
               {copertina.bollo && <span className={`bollo ${copertina.bollo.classe}`}>{copertina.bollo.testo}</span>}
               <span className="nome">{copertina.titolo}</span>
               <span className="matricola">{copertina.sotto}</span>

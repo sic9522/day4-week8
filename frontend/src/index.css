@@ -423,7 +423,7 @@ a { color: var(--accent); }
   right: 16px;
   z-index: 3;
   width: 22px;
-  height: 30px;
+  height: 48px;
   padding: 0;
   margin: 0;
   border: 0;
@@ -431,11 +431,13 @@ a { color: var(--accent); }
   background: rgba(8, 6, 16, 0.45);
   box-shadow: inset 0 0 0 1px rgba(243, 240, 255, 0.28);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);
-  transition: height 0.28s cubic-bezier(0.2, 0.8, 0.25, 1), background 0.28s ease, box-shadow 0.28s ease;
+  /* a riposo sporge meno: lo si spinge in su e la copertina lo taglia */
+  transform: translateY(-18px);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.25, 1), background 0.28s ease, box-shadow 0.28s ease;
 }
 .segnalibro:hover { background: rgba(8, 6, 16, 0.7); }
 .segnalibro[aria-pressed='true'] {
-  height: 48px;
+  transform: translateY(0);
   background: var(--accent);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 6px 14px -6px rgba(0, 0, 0, 0.7);
 }

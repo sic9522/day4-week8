@@ -78,7 +78,7 @@ export default function Preferiti() {
             : 'Nessun libro in questo scaffale.'}
         </p>
       ) : (
-        <div className="griglia">
+        <div className="griglia cinque">
           {mostrati.map((p, i) => (
             <Tessera
               key={p.id}

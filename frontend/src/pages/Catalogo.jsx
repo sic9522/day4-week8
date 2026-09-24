@@ -14,9 +14,10 @@ export default function Catalogo() {
   const [ricerca, setRicerca] = useState({ stati: {}, vinti: null })
   const [chiesto, setChiesto] = useState(null)
   const [durata, setDurata] = useState('MEDIA')
+  const [categoria, setCategoria] = useState('tutte')
 
   useEffect(() => {
-    Promise.all([libriAPI.elenco({ size: 60 }), preferitiAPI.miei({ size: 100 }), costantiAPI.tariffe()])
+    Promise.all([libriAPI.elenco({ size: 100 }), preferitiAPI.miei({ size: 100 }), costantiAPI.tariffe()])
       .then(([l, p, t]) => {
         setLibri(l.data.content)
         setPreferiti(p.data.content)
@@ -42,7 +43,14 @@ export default function Catalogo() {
     }
   }
 
-  const mostrati = ricerca.vinti ?? libri
+  // Le categorie non sono un elenco fisso: vengono dai libri che ci sono davvero
+  const categorie = useMemo(
+    () => ['tutte', ...Array.from(new Set(libri.map((l) => l.genere).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'it'))],
+    [libri],
+  )
+
+  const base = ricerca.vinti ?? libri
+  const mostrati = categoria === 'tutte' ? base : base.filter((l) => l.genere === categoria)
 
   if (caricamento) return <p className="caricamento">Sto aprendo gli scaffali…</p>
 
@@ -61,12 +69,28 @@ export default function Catalogo() {
         />
       </div>
 
+      {categorie.length > 2 && (
+        <div className="filtri">
+          {categorie.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`filtro${categoria === c ? ' attivo' : ''}`}
+              aria-pressed={categoria === c}
+              onClick={() => setCategoria(c)}
+            >
+              {c === 'tutte' ? `Tutte · ${libri.length}` : `${c} · ${libri.filter((l) => l.genere === c).length}`}
+            </button>
+          ))}
+        </div>
+      )}
+
       {errore && <p className="errore">{errore}</p>}
 
       {mostrati.length === 0 ? (
-        <p className="vuoto">Nessun libro nel catalogo.</p>
+        <p className="vuoto">Nessun libro in questa categoria.</p>
       ) : (
-        <div className="griglia">
+        <div className="griglia cinque">
           {mostrati.map((libro, i) => (
             <Tessera
               key={libro.id}

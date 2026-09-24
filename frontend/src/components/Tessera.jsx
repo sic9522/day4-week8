@@ -23,7 +23,15 @@ export default function Tessera({ id, indice = 0, titolo, sotto, bollo, foto, st
       onClick={onApri}
       aria-label={`${titolo}${sotto ? `, ${sotto}` : ''}. Apri la scheda.`}
     >
-      {foto && <img className="copertina-foto" src={foto} alt="" />}
+      {foto && (
+        <img
+          className="copertina-foto"
+          src={foto}
+          alt=""
+          loading="lazy"
+          onError={(e) => { e.currentTarget.hidden = true }}
+        />
+      )}
 
       {segnalibro && (
         <span
