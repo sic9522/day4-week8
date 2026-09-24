@@ -1,18 +1,17 @@
 # Blueprint Render: database + backend + frontend.
 # Su Render: New > Blueprint > repository > Apply.
-# I nomi dei servizi sono gia' quelli del progetto.
 
 databases:
-  - name: day4-week8-db
-    databaseName: day4_week8
-    user: day4_week8
+  - name: iltempiodeilibri-db
+    databaseName: iltempiodeilibri
+    user: iltempiodeilibri
     plan: free
     region: frankfurt
 
 services:
   # ---------- Backend: Spring Boot via Docker ----------
   - type: web
-    name: day4-week8-be
+    name: iltempiodeilibri-be
     runtime: docker
     plan: free
     region: frankfurt
@@ -27,20 +26,39 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: day4-week8-db
+          name: iltempiodeilibri-db
           property: connectionString
-      # Origine del FE per il CORS, es. https://day4-week8-fe.onrender.com
+
+      # Origine del FE per il CORS, es. https://iltempiodeilibri-fe.onrender.com
       - key: ALLOWED_ORIGIN
         sync: false
+
       # Chiave di firma dei token, la stessa a ogni deploy: si incolla a mano
       # (openssl rand -base64 48). generateValue darebbe 32 caratteri, troppo
       # corti una volta decodificati da base64 per una firma HMAC-SHA256.
-      - key: JWT
+      - key: JWT_SECRET
+        sync: false
+
+      # Utenza master: l'unica che puo' nominare admin
+      - key: MASTER_USERNAME
+        sync: false
+      - key: MASTER_PASSWORD
+        sync: false
+
+      # Dati dimostrativi: 10 sedi, 10 admin, 100 clienti con password note.
+      # Metterlo a "false" prima di aprire il sito a qualcuno che non sia te.
+      - key: DEMO_ENABLED
+        value: "true"
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CLIENTE_PASSWORD
         sync: false
 
   # ---------- Frontend: build Vite statica ----------
   - type: web
-    name: day4-week8-fe
+    name: iltempiodeilibri-fe
     runtime: static
     rootDir: frontend
     buildCommand: npm ci && npm run build
@@ -50,7 +68,7 @@ services:
         - frontend/**
         - render.yaml
     envVars:
-      # Indirizzo del BE, es. https://day4-week8-be.onrender.com (senza / finale)
+      # Indirizzo del BE, es. https://iltempiodeilibri-be.onrender.com (senza / finale)
       - key: VITE_API_URL
         sync: false
     routes:

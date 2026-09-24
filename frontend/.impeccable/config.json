@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-09-24T12:41:58.868Z",
+        "reason": "scelta mia per il design system del Tempio dei Libri, approvata dall'utente sui quattro prototipi costruiti su questa coppia di caratteri; cambiarla ora spezzerebbe l'identita' gia' vista e accettata"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-09-24T12:41:58.940Z",
+        "reason": "titoli del design system del Tempio dei Libri, stessa coppia approvata sui prototipi; Inter per il testo, Space Grotesk per i titoli"
+      }
+    ]
+  }
+}
