@@ -32,6 +32,11 @@ services:
       # Origine del FE per il CORS, es. https://day4-week8-fe.onrender.com
       - key: ALLOWED_ORIGIN
         sync: false
+      # Chiave di firma dei token, la stessa a ogni deploy: si incolla a mano
+      # (openssl rand -base64 48). generateValue darebbe 32 caratteri, troppo
+      # corti una volta decodificati da base64 per una firma HMAC-SHA256.
+      - key: JWT
+        sync: false
 
   # ---------- Frontend: build Vite statica ----------
   - type: web

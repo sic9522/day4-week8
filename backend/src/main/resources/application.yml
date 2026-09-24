@@ -35,6 +35,13 @@ management:
       probes:
         enabled: true
 
+jwt:
+  # Chiave di firma dei token: variabile d'ambiente JWT, mai scritta qui.
+  # Si genera una volta con: openssl rand -base64 48
+  secret: ${JWT}
+  # 24 ore
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
 app:
   cors:
     # In produzione: ALLOWED_ORIGIN=https://<fe>.onrender.com (piu' valori separati da virgola).
