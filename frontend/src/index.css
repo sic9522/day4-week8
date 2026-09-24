@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap');
 
 :root {
+  color-scheme: dark;
   --bg: #0b0a12;
   --surface: #14121d;
   --surface-2: #1c1929;
@@ -15,6 +16,8 @@
   --on-accent: #ffffff;
   --paper: #1a1725;
   --on-paper: #e7e3f2;
+  --campo-bg: #231e35;
+  --campo-line: #453c66;
   --ok-bg: #16452f;
   --ok-fg: #55e3a4;
   --ko-bg: #4a1d1d;
@@ -29,6 +32,7 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
+    color-scheme: light;
     --bg: #f4f1fb;
     --surface: #ffffff;
     --surface-2: #d9d2ef;
@@ -38,6 +42,8 @@
     --accent: #5b37f0;
     --paper: #e7e1f5;
     --on-paper: #1b1826;
+    --campo-bg: #ffffff;
+    --campo-line: #b3a6de;
     --ok-bg: #d6f0e2;
     --ok-fg: #0e5136;
     --ko-bg: #fbdddb;
@@ -51,6 +57,7 @@
 }
 
 :root[data-theme='light'] {
+  color-scheme: light;
   --bg: #f4f1fb;
   --surface: #ffffff;
   --surface-2: #d9d2ef;
@@ -60,6 +67,8 @@
   --accent: #5b37f0;
   --paper: #e7e1f5;
   --on-paper: #1b1826;
+  --campo-bg: #ffffff;
+  --campo-line: #b3a6de;
   --ok-bg: #d6f0e2;
   --ok-fg: #0e5136;
   --ko-bg: #fbdddb;
@@ -211,15 +220,17 @@ a { color: var(--accent); }
 .btn.mini { font-size: 11.5px; padding: 6px 11px; }
 .btn.largo { width: 100%; padding: 12px 16px; font-size: 14px; }
 
-.campo { display: grid; gap: 5px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.campo { display: grid; gap: 5px; min-width: 0; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .campo input, .campo select, .campo textarea {
   font: inherit;
   font-size: 14px;
   letter-spacing: 0;
   text-transform: none;
-  background: var(--surface);
+  width: 100%;
+  min-width: 0;
+  background: var(--campo-bg);
   color: var(--fg);
-  border: 1px solid var(--line);
+  border: 1px solid var(--campo-line);
   border-radius: var(--radius);
   padding: 10px 12px;
 }
@@ -467,7 +478,7 @@ a { color: var(--accent); }
   padding: 8px 14px;
   cursor: pointer;
 }
-.culla { height: min(80vh, 620px); aspect-ratio: 2 / 3; max-width: 88vw; }
+.culla { height: min(82vh, 640px); aspect-ratio: 3 / 4; max-width: min(88vw, 460px); }
 .volume { position: relative; width: 100%; height: 100%; perspective: 2000px; transition: transform 0.7s cubic-bezier(0.3, 0.8, 0.25, 1); }
 .volume.aperto { transform: translateX(50%); }
 
@@ -720,7 +731,7 @@ a { color: var(--accent); }
 .facciata .motto { margin: 14px 0 0; font-size: 13.5px; color: rgba(243, 240, 255, 0.72); max-width: 26ch; }
 .facciata .sigla { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(243, 240, 255, 0.6); }
 .foglio { background: var(--paper); color: var(--on-paper); padding: 40px 32px; display: grid; align-content: center; gap: 16px; }
-.foglio .campo input, .foglio .campo select { background: var(--surface); color: var(--on-paper); }
+.foglio .campo input, .foglio .campo select { background: var(--campo-bg); color: var(--on-paper); }
 .foglio h2 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
 .coppia { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
