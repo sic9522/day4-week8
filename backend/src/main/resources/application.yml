@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: day4-week8
+
+  datasource:
+    # In locale l'indirizzo ha un valore di riserva, utente e password no: stanno
+    # nelle variabili d'ambiente POSTGRES / POSTGRES_PASSWORD (vedi .env.example),
+    # mai scritte qui dentro. Su Render DatabaseUrl legge DATABASE_URL e
+    # sovrascrive tutte e tre le proprieta'.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/day4_week8}
+    username: ${POSTGRES}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+server:
+  # Render assegna la porta in PORT.
+  port: ${PORT:8080}
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+app:
+  cors:
+    # In produzione: ALLOWED_ORIGIN=https://<fe>.onrender.com (piu' valori separati da virgola).
+    allowed-origins: ${ALLOWED_ORIGIN:http://localhost:5173,http://localhost:4173}

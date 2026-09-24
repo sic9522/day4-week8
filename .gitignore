@@ -1,0 +1,17 @@
+# Backend
+backend/target/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Editor
+.idea/
+.vscode/
+*.iml
+
+# Backend
+backend/.env
+backend/.env.local
