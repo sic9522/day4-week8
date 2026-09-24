@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import Testata from '../components/Testata'
+import Piede from '../components/Piede'
 
 /** Il cliente entra direttamente nella libreria: niente barra laterale, solo tre schede. */
 export default function LayoutCliente() {
@@ -15,6 +16,7 @@ export default function LayoutCliente() {
       <main className="corpo">
         <Outlet />
       </main>
+      <Piede />
     </>
   )
 }

@@ -60,7 +60,7 @@ export default function Libreria() {
 
       {errore && <p className="errore">{errore}</p>}
 
-      <div className="griglia">
+      <div className="griglia cinque">
         {mostrati.map((l, i) => (
           <Tessera
             key={l.id}
@@ -131,13 +131,17 @@ export default function Libreria() {
               <p className="eyebrow">{fuori?.length === 1 ? 'La copia fuori' : 'Le copie fuori'}</p>
               {!fuori ? <p className="vuoto">Un attimo…</p>
                 : fuori.length === 0 ? <p className="vuoto">Tutte le copie sono a scaffale.</p>
-                  : fuori.map((p) => (
-                    <div key={p.id} className={`riga${p.stato === 'IN_RITARDO' ? ' tardi' : ''}`}>
-                      <span className="tit">{p.user.nome} {p.user.cognome}</span>
-                      <span className="quando">{dataIT(p.dataRiconsegnaPrevista)}</span>
-                      <span className="chi">{p.user.email}</span>
-                    </div>
-                  ))}
+                  : (
+                    <>
+                      {fuori.slice(0, 4).map((p) => (
+                        <div key={p.id} className={`riga${p.stato === 'IN_RITARDO' ? ' tardi' : ''}`}>
+                          <span className="tit">{p.user.nome} {p.user.cognome}</span>
+                          <span className="quando">{dataIT(p.dataRiconsegnaPrevista)}</span>
+                        </div>
+                      ))}
+                      {fuori.length > 4 && <p className="ancora">e altre {fuori.length - 4}</p>}
+                    </>
+                  )}
             </div>
 
             <div className="sezione">
@@ -221,7 +225,7 @@ function ModuloLibro({ dati, generi, onCambia, onChiudi, onCreato, onErrore }) {
         <p className="contatto">La copertina può arrivare da Open Library: incolla l&apos;indirizzo dell&apos;immagine.</p>
       </div>
 
-      <div className="sezione" style={{ display: 'grid', gap: 10 }}>
+      <div className="sezione modulo-fitto due">
         <label className="campo" htmlFor="nl-isbn">ISBN<input id="nl-isbn" inputMode="numeric" value={dati.isbn} onChange={campo('isbn')} /></label>
         <label className="campo" htmlFor="nl-titolo">Titolo<input id="nl-titolo" value={dati.titolo} onChange={campo('titolo')} /></label>
         <label className="campo" htmlFor="nl-autore">Autore<input id="nl-autore" value={dati.autore} onChange={campo('autore')} /></label>

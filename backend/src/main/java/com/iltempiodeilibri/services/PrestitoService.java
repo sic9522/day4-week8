@@ -52,8 +52,18 @@ public class PrestitoService {
 
     @Transactional
     public PrestitoResponse apri(NuovoPrestitoRequest r, UUID adminId) {
-        if (!userRepository.existsById(r.userId())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Utente non trovato");
+        var cliente = userRepository.findById(r.userId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utente non trovato"));
+
+        // Un prestito si fa solo nella biblioteca dove il cliente è iscritto.
+        // Il SuperUser non ha sede e non è vincolato; un admin sì.
+        var admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Utente non trovato"));
+        if (admin.getSede() != null) {
+            if (cliente.getSede() == null || !cliente.getSede().getId().equals(admin.getSede().getId())) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        "Questo cliente è iscritto a un'altra sede: il prestito lo apre la sua biblioteca");
+            }
         }
         if (!libroRepository.existsById(r.libroId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Libro non trovato");

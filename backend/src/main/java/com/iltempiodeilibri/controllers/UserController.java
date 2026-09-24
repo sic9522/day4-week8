@@ -59,11 +59,14 @@ public class UserController {
     }
 
     // Elenco utenti con ricerca libera e filtro per ruolo: alimenta le sezioni Clienti e Admin
+    // Un admin vede solo la propria sede: la restrizione la impone il server, non il parametro
+    // che arriva dal browser, altrimenti basterebbe cambiarlo a mano per leggere gli altri.
     @PreAuthorize("hasAnyRole('Admin', 'SuperUser')")
     @GetMapping("/all")
     public PageResponse<UserResponse> all(@ModelAttribute UserSearchParams params,
-                                          @PageableDefault(size = 20) Pageable pageable) {
-        return userService.cerca(params, pageable);
+                                          @PageableDefault(size = 20) Pageable pageable,
+                                          @AuthenticationPrincipal Jwt jwt) {
+        return userService.cerca(params, UUID.fromString(jwt.getSubject()), pageable);
     }
 
     @PreAuthorize("hasAnyRole('Admin', 'SuperUser')")

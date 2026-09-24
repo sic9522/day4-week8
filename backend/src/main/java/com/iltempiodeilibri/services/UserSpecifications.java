@@ -36,6 +36,10 @@ final class UserSpecifications {
                 }
             }
 
+            if (params != null && params.sedeId() != null) {
+                condizioni.add(cb.equal(root.get("sede").get("id"), params.sedeId()));
+            }
+
             return condizioni.isEmpty() ? cb.conjunction() : cb.and(condizioni.toArray(new Predicate[0]));
         };
     }

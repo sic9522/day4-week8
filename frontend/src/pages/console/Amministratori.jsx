@@ -44,7 +44,7 @@ export default function Amministratori() {
 
       {errore && <p className="errore">{errore}</p>}
 
-      <div className="griglia">
+      <div className="griglia cinque">
         {mostrati.map((a, i) => (
           <Tessera
             key={a.id}
@@ -159,7 +159,7 @@ function ModuloAdmin({ dati, onCambia, onChiudi, onCreato, onErrore }) {
         <p className="contatto">Indica anche la sede che gestirà: se non esiste, viene creata.</p>
       </div>
 
-      <div className="sezione" style={{ display: 'grid', gap: 10 }}>
+      <div className="sezione modulo-fitto due">
         <label className="campo" htmlFor="na-nome">Nome<input id="na-nome" value={dati.nome} onChange={campo('nome')} /></label>
         <label className="campo" htmlFor="na-cognome">Cognome<input id="na-cognome" value={dati.cognome} onChange={campo('cognome')} /></label>
         <label className="campo" htmlFor="na-email">Email<input id="na-email" type="email" value={dati.email} onChange={campo('email')} /></label>

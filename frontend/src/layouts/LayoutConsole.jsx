@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Testata from '../components/Testata'
+import Piede from '../components/Piede'
 
 /**
  * Il guscio di master e admin: barra laterale 1/5, corpo 4/5.
@@ -39,6 +40,7 @@ export default function LayoutConsole() {
           <Outlet />
         </main>
       </div>
+      <Piede />
     </>
   )
 }

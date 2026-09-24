@@ -240,6 +240,9 @@ a { color: var(--accent); }
 
 /* ---------- guscio ---------- */
 .corpo { max-width: 1180px; margin: 0 auto; padding: 28px 24px 80px; }
+/* la console ha tabelle e moduli: le serve piu' respiro del sito pubblico */
+.guscio .corpo { max-width: 1560px; }
+.corpo.larga { max-width: 1560px; }
 .barra {
   display: flex;
   flex-wrap: wrap;
@@ -322,6 +325,11 @@ a { color: var(--accent); }
 
 /* ---------- griglia di volumi ---------- */
 .griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(152px, 1fr)); gap: 30px 22px; }
+/* in console le schede stanno cinque per riga, e scendono a quattro, tre, due sui monitor stretti */
+.griglia.cinque { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 1360px) { .griglia.cinque { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .griglia.cinque { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px)  { .griglia.cinque { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .tessera {
   position: relative;
@@ -506,10 +514,11 @@ a { color: var(--accent); }
   color: var(--on-paper);
   border: 1px solid var(--line);
   box-shadow: inset 12px 0 26px -12px rgba(0, 0, 0, 0.45);
-  padding: 34px 30px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  overflow: hidden;
 }
 .targa { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; text-align: center; }
 .titolo-targa { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin: 0; }
@@ -531,15 +540,26 @@ a { color: var(--accent); }
   color: var(--on-paper);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-lift), inset 14px 0 24px -16px rgba(0, 0, 0, 0.4);
-  padding: 34px 30px;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  overflow-y: auto;
+  gap: 14px;
+  overflow: hidden;
 }
 .pagina h2 { margin: 0; font-size: 24px; letter-spacing: -0.02em; line-height: 1.15; }
 .contatto { margin: 4px 0 0; font-size: 13px; color: var(--muted); word-break: break-word; }
-.sezione { border-top: 1px solid var(--line); padding-top: 13px; }
+.sezione { border-top: 1px solid var(--line); padding-top: 13px; min-height: 0; }
+/* dentro la modale le righe non scorrono: se sono troppe la pagina ne mostra alcune
+   e la scheda intera resta leggibile in un colpo d'occhio */
+.pagina .riga { padding: 8px 0; }
+.pagina .riga .tit { font-size: 13.5px; }
+.pagina .modulo-fitto { display: grid; gap: 8px; }
+.pagina .modulo-fitto.due { grid-template-columns: 1fr 1fr; }
+.pagina .modulo-fitto.due .intero { grid-column: 1 / -1; }
+.pagina .modulo-fitto .campo input,
+.pagina .modulo-fitto .campo select { padding: 7px 10px; font-size: 13px; }
+.pagina .modulo-fitto .campo { font-size: 9.5px; gap: 3px; }
+.ancora { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
 .sezione > .eyebrow { margin-bottom: 9px; }
 .sinossi {
   margin: 0;
@@ -548,7 +568,7 @@ a { color: var(--accent); }
   color: var(--muted);
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 4;
   overflow: hidden;
 }
 .azioni { display: flex; gap: 7px; flex-wrap: wrap; margin-top: auto; }
@@ -757,4 +777,38 @@ a { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .tessera, .volume, .cardine, .segnalibro { transition-duration: 0.01ms !important; }
+}
+
+
+/* ---------- piede ---------- */
+.piede {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px 24px;
+  margin-top: 64px;
+}
+.piede .dentro {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 40px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.piede .sigillo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+.piede .righe { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13px; color: var(--muted); }
+.piede .righe a { color: var(--muted); text-decoration: none; }
+.piede .righe a:hover { color: var(--fg); text-decoration: underline; }
+.piede .nota { font-size: 12px; color: var(--muted); margin: 0; }
+.guscio ~ .piede .dentro, .piede.larga .dentro { max-width: 1560px; }
+@media (max-width: 620px) {
+  .piede { padding: 22px 16px; margin-top: 48px; }
+  .piede .dentro { gap: 14px; }
 }

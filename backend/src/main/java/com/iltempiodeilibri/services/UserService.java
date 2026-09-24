@@ -142,12 +142,24 @@ public class UserService {
         return UserResponse.of(user, nomiRuoli(user));
     }
 
+    /**
+     * Elenco utenti per la console.
+     * <p>
+     * Se chi chiede è un admin di sede, la ricerca viene forzata sulla sua sede: il parametro
+     * che arriva dal browser non basta, perché chiunque può riscriverlo. Il SuperUser non ha
+     * sede e vede tutti.
+     */
     @Transactional(readOnly = true)
-    public PageResponse<UserResponse> cerca(UserSearchParams params, Pageable pageable) {
+    public PageResponse<UserResponse> cerca(UserSearchParams params, UUID chiamanteId, Pageable pageable) {
+        User chiamante = trovaUtente(chiamanteId);
+        UserSearchParams effettivi = chiamante.getSede() == null
+                ? params
+                : new UserSearchParams(params.q(), params.ruolo(), chiamante.getSede().getId());
+
         Sort sort = SearchUtils.traduciSort(pageable.getSort(), SORT_CONSENTITI, SORT_PREDEFINITO);
         Pageable richiesta = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         return PageResponse.of(userRepository
-                .findAll(UserSpecifications.da(params), richiesta)
+                .findAll(UserSpecifications.da(effettivi), richiesta)
                 .map(u -> UserResponse.of(u, nomiRuoli(u))));
     }
 

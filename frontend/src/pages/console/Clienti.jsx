@@ -59,7 +59,7 @@ export default function Clienti() {
 
       {errore && <p className="errore">{errore}</p>}
 
-      <div className="griglia">
+      <div className="griglia cinque">
         {mostrati.map((c, i) => (
           <Tessera
             key={c.id}
@@ -116,13 +116,22 @@ export default function Clienti() {
               {!scheda ? <p className="vuoto">Un attimo…</p>
                 : scheda.prestiti.filter((p) => p.stato !== 'CHIUSO').length === 0
                   ? <p className="vuoto">Nessun prestito aperto.</p>
-                  : scheda.prestiti.filter((p) => p.stato !== 'CHIUSO').map((p) => (
-                    <div key={p.id} className="riga">
-                      <span className="tit">{p.libro.titolo}</span>
-                      <span className="totale">{euro(p.dovutoAOggi)}</span>
-                      <span className="quando">{dataIT(p.dataRiconsegnaPrevista)}</span>
-                    </div>
-                  ))}
+                  : (
+                    <>
+                      {scheda.prestiti.filter((p) => p.stato !== 'CHIUSO').slice(0, 4).map((p) => (
+                        <div key={p.id} className="riga">
+                          <span className="tit">{p.libro.titolo}</span>
+                          <span className="totale">{euro(p.dovutoAOggi)}</span>
+                          <span className="quando">{dataIT(p.dataRiconsegnaPrevista)}</span>
+                        </div>
+                      ))}
+                      {scheda.prestiti.filter((p) => p.stato !== 'CHIUSO').length > 4 && (
+                        <p className="ancora">
+                          e altri {scheda.prestiti.filter((p) => p.stato !== 'CHIUSO').length - 4}
+                        </p>
+                      )}
+                    </>
+                  )}
             </div>
 
             {scheda && (
@@ -197,7 +206,7 @@ function ModuloCliente({ dati, sedi, onCambia, onChiudi, onCreato, onErrore }) {
         <p className="contatto">Allo sportello: chi si iscrive da solo usa la registrazione.</p>
       </div>
 
-      <div className="sezione" style={{ display: 'grid', gap: 10 }}>
+      <div className="sezione modulo-fitto due">
         <label className="campo" htmlFor="nc-nome">Nome<input id="nc-nome" value={dati.nome} onChange={campo('nome')} /></label>
         <label className="campo" htmlFor="nc-cognome">Cognome<input id="nc-cognome" value={dati.cognome} onChange={campo('cognome')} /></label>
         <label className="campo" htmlFor="nc-email">Email<input id="nc-email" type="email" value={dati.email} onChange={campo('email')} /></label>
