@@ -1,4 +1,4 @@
-package it.epicode.day4week8.config;
+package com.example.day4_week8.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

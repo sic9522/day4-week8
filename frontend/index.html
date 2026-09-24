@@ -7,6 +7,11 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- sockjs-client referenzia `global` (Node) al primo import: Vite pre-bundla
+         il pacchetto CJS con un runtime che non applica il replace di vite.config.js
+         in dev, quindi senza questo va in "Uncaught ReferenceError: global is not
+         defined" appena parte il socket. Deve girare PRIMA del modulo sotto. -->
+    <script>window.global = window</script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

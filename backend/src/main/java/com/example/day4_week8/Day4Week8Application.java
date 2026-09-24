@@ -1,6 +1,6 @@
-package it.epicode.day4week8;
+package com.example.day4_week8;
 
-import it.epicode.day4week8.config.DatabaseUrl;
+import com.example.day4_week8.config.DatabaseUrl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

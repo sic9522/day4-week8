@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 
-	<groupId>it.epicode</groupId>
+	<groupId>com.example</groupId>
 	<artifactId>day4-week8</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>day4-week8</name>

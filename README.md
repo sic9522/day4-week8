@@ -5,7 +5,7 @@ Esercizio della settimana 8, pronto per il deploy su Render.
 | Parte | Tecnologia | In locale | Su Render |
 |---|---|---|---|
 | Backend | Spring Boot 4.1.1, Java 25, Maven wrapper | `backend` sulla 8080 | Web Service (Docker) |
-| Frontend | React 19, Vite, JavaScript (JSX), Tailwind 4 | `frontend` sulla 5173 | Static Site |
+| Frontend | React 19, Vite, JSX, Bootstrap 5, Router, axios, STOMP | `frontend` sulla 5173 | Static Site |
 | Database | PostgreSQL | locale sulla 5432 | Render PostgreSQL |
 
 ## Endpoint
@@ -56,15 +56,17 @@ render.yaml                 blueprint: database + backend + frontend
 avvia.cmd / avvia.sh        avvio locale (Windows / macOS-Linux)
 backend/
   Dockerfile                usato solo da Render
-  src/main/java/it/epicode/day4week8/
+  src/main/java/com/example/day4_week8/
     Day4Week8Application.java
     config/DatabaseUrl.java   DATABASE_URL -> formato JDBC
     config/CorsConfig.java    origini da ALLOWED_ORIGIN
-    web/StatoController.java  endpoint di prova
+    controller/StatoController.java  endpoint di prova
   src/main/resources/application.yml
   .env.example              variabili d'ambiente da impostare in locale
 frontend/
-  src/lib/api.js            base delle fetch, da VITE_API_URL
-  src/App.jsx               pagina di prova
+  src/services/api.js       client axios, base da VITE_API_URL
+  src/services/socket.js    client STOMP/SockJS, pronto ma non attivo
+  src/routes, pages, layouts, components, hooks, context
+  src/pages/Home.jsx        pagina di prova
   .env.example
 ```

@@ -1,4 +1,4 @@
-package it.epicode.day4week8.web;
+package com.example.day4_week8.controller;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
